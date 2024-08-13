@@ -1,0 +1,23 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 19,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "debug",
+      "hidden": false,
+      "description": "Debug build with Unix Makefiles",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/Desktop-Debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+	"CMAKE_PREFIX_PATH": "/home/sr/Qt/6.7.2/gcc_64/lib/cmake",
+        "XKB_INCLUDE_DIR": "/usr/include/xkbcommon",
+        "XKB_LIBRARY": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so"
+      }
+    }
+  ]
+}

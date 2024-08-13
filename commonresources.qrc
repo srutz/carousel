@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/block_640.png</file>
+        <file>images/back_48.png</file>
+        <file>images/forward_48.png</file>
+    </qresource>
+</RCC>
