@@ -3,6 +3,7 @@
 #include "./ui_mainwindow.h"
 
 #include <QShortcut>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,9 +16,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionExit, &QAction::triggered, this, [=]() {
         QApplication::exit();
     });
+    connect(ui->actionChooseDirectory, &QAction::triggered, this, [=]() {
+        chooseDirectory();
+    });
     connect(ui->actionPreviousImage, &QAction::triggered, this, [=]() {
         galleryView->step(-1);
     });
+    {
+        QShortcut *shortcut= new QShortcut(QKeySequence("Ctrl+Q"), this);
+        connect(shortcut, &QShortcut::activated, this, [] () { QApplication::exit(); });
+    }
     {
         QShortcut *shortcut= new QShortcut(QKeySequence("Left"), this);
         connect(shortcut, &QShortcut::activated, ui->actionPreviousImage, &QAction::trigger);
@@ -36,11 +44,33 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(galleryView);
 
     Gallery gallery;
-    gallery.initFromDirectory("/home/sr/Pictures/Screenshots");
+    gallery.initFromDirectory(".");
     galleryView->setGallery(gallery);
 }
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::chooseDirectory()
+{
+    QString dir = QFileDialog::getExistingDirectory(
+        this,
+        "Select Directory",
+        "",
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
+    );
+
+    if (dir.isEmpty()) {
+        qDebug() << "No directory selected.";
+        return;
+    }
+
+    auto galleryView = this->findChild<GalleryView*>();
+    Gallery gallery;
+    gallery.initFromDirectory(dir);
+    galleryView->setGallery(gallery);
 }

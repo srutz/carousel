@@ -9,7 +9,7 @@ void Gallery::initFromDirectory(QString directory)
 {
     QStringList imageFilters;
     imageFilters << "*.png" << "*.jpg" << "*.jpeg" << "*.bmp" << "*.gif" << "*.tiff" << "*.svg";
-    QDir dir(directory);
+    auto dir = QString(".") == directory ? QDir::home() : QDir(directory);
     QFileInfoList fileInfoList = dir.entryInfoList(imageFilters, QDir::Files);
 
     m_images.clear();

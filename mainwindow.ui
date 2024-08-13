@@ -49,6 +49,8 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionChooseDirectory"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -75,6 +77,11 @@
   <action name="actionNextImage">
    <property name="text">
     <string>&amp;Next Image</string>
+   </property>
+  </action>
+  <action name="actionChooseDirectory">
+   <property name="text">
+    <string>&amp;Open directory</string>
    </property>
   </action>
  </widget>
