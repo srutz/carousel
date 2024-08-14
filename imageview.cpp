@@ -18,18 +18,26 @@ void ImageView::paintEvent(QPaintEvent *event)
     auto size = this->size();
     if (!m_pixmap.isNull()) {
         auto pixmapSize = m_pixmap.size();
-        auto pixmapAspectRatio = static_cast<double>(pixmapSize.width()) / pixmapSize.height();
-        double widgetAspectRatio = static_cast<double>(size.width()) / size.height();
 
-        QRectF targetRect;
-        if (widgetAspectRatio > pixmapAspectRatio) {
-            double scaledWidth = pixmapAspectRatio * size.height();
-            targetRect = QRectF((size.width() - scaledWidth) / 2, 0, scaledWidth, size.height());
+        if (pixmapSize.width() <= size.width() && pixmapSize.height() <= size.height()) {
+            auto pos = QPoint(
+                (size.width() - pixmapSize.width()) / 2,
+                (size.height() - pixmapSize.height()) / 2);
+            painter.drawPixmap(pos, m_pixmap);
         } else {
-            qreal scaledHeight = size.width() / pixmapAspectRatio;
-            targetRect = QRectF(0, (size.height() - scaledHeight) / 2, size.width(), scaledHeight);
+            auto pixmapAspectRatio = static_cast<double>(pixmapSize.width()) / pixmapSize.height();
+            double widgetAspectRatio = static_cast<double>(size.width()) / size.height();
+
+            QRectF targetRect;
+            if (widgetAspectRatio > pixmapAspectRatio) {
+                double scaledWidth = pixmapAspectRatio * size.height();
+                targetRect = QRectF((size.width() - scaledWidth) / 2, 0, scaledWidth, size.height());
+            } else {
+                qreal scaledHeight = size.width() / pixmapAspectRatio;
+                targetRect = QRectF(0, (size.height() - scaledHeight) / 2, size.width(), scaledHeight);
+            }
+            painter.drawPixmap(targetRect, m_pixmap, m_pixmap.rect());
         }
-        painter.drawPixmap(targetRect, m_pixmap, m_pixmap.rect());
     }
 }
 

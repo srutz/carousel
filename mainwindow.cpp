@@ -84,6 +84,16 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::contextMenuEvent(QContextMenuEvent *event)
+{
+    QMenu menu(this);
+    menu.addAction(ui->actionChooseDirectory);
+    menu.addSeparator();
+    menu.addAction(ui->actionCopyToClipboard);
+    menu.addAction(ui->actionCopyFilepathToClipboard);
+    menu.exec(event->globalPos());
+}
+
 void MainWindow::chooseDirectory()
 {
     QString dir = QFileDialog::getExistingDirectory(

@@ -18,6 +18,10 @@ public:
     ~MainWindow();
     void chooseDirectory();
 
+protected:
+    void contextMenuEvent(QContextMenuEvent *event) override;
+
+
 private:
     Ui::MainWindow *ui;
 };
