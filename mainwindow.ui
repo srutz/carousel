@@ -59,6 +59,9 @@
     </property>
     <addaction name="actionPreviousImage"/>
     <addaction name="actionNextImage"/>
+    <addaction name="separator"/>
+    <addaction name="actionCopyToClipboard"/>
+    <addaction name="actionCopyFilepathToClipboard"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -82,6 +85,16 @@
   <action name="actionChooseDirectory">
    <property name="text">
     <string>&amp;Open directory</string>
+   </property>
+  </action>
+  <action name="actionCopyToClipboard">
+   <property name="text">
+    <string>&amp;Copy to clipboard</string>
+   </property>
+  </action>
+  <action name="actionCopyFilepathToClipboard">
+   <property name="text">
+    <string>Copy &amp;filepath to clipboard</string>
    </property>
   </action>
  </widget>

@@ -2,10 +2,15 @@
 #define IMAGEVIEW_H
 
 
+#include "animatedwidget.h"
+
 #include <QWidget>
 #include <QPaintEvent>
 
-class ImageView : public QWidget
+/*
+ * Shows a single pixmap and a label for it
+ */
+class ImageView : public AnimatedWidget
 {
     Q_OBJECT
 
@@ -16,6 +21,7 @@ class ImageView : public QWidget
 public:
     explicit ImageView(QWidget *parent = nullptr);
 
+    QPixmap getImage() const;
     void showPixmap(QPixmap);
     void showErrorImage();
     void showFile(QString path);

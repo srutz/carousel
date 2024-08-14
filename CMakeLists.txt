@@ -17,13 +17,19 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        galleryview.h
+        galleryview.cpp
+        imageview.h
+        imageview.cpp
+        commonresources.qrc
+        gallery.h
+        gallery.cpp
+        animatedwidget.cpp
+        animatedwidget.h
+        toast.h
 )
 
-qt_add_executable(carousel MANUAL_FINALIZATION ${PROJECT_SOURCES}
-    galleryview.h galleryview.cpp
-    imageview.h imageview.cpp
-    commonresources.qrc
-    gallery.h gallery.cpp)
+qt_add_executable(carousel MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(carousel PRIVATE Qt6::Widgets)
 qt_finalize_executable(carousel)

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QScreen>
 #include <QStyleFactory>
 
 void applyDarkStyle(QApplication& app)
