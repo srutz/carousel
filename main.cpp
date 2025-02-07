@@ -2,7 +2,10 @@
 
 #include <QApplication>
 #include <QScreen>
+#include <QDebug>
 #include <QStyleFactory>
+
+
 
 void applyDarkStyle(QApplication& app)
 {
