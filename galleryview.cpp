@@ -10,11 +10,8 @@
 
 
 
-
 GalleryView::GalleryView(QWidget *parent)
     : QWidget{parent}
-    , m_gallery(Gallery())
-
 {
     m_imageViewContainer = new QWidget(this);
     for (int i = 0; i < 3; i++) {
@@ -22,7 +19,7 @@ GalleryView::GalleryView(QWidget *parent)
     }
     this->m_leftNavigation = new QWidget(this);
     this->m_rightNavigation = new QWidget(this);
-    auto setupNavigation = [=](QWidget *widget, const QIcon icon, auto onClick) {
+    auto setupNavigation = [=,this](QWidget *widget, const QIcon icon, auto onClick) {
         auto layout = new QVBoxLayout(this);
         layout->setContentsMargins(0, 0, 0, 0);
         widget->setLayout(layout);
@@ -33,16 +30,16 @@ GalleryView::GalleryView(QWidget *parent)
         button->setIconSize(QSize(ICON_SIZE, ICON_SIZE));
         button->setStyleSheet("QPushButton { border: none; }");
         layout->addWidget(button);
-        connect(button, &QPushButton::clicked, widget, [=]() {
+        connect(button, &QPushButton::clicked, widget, [=,this]() {
             onClick();
         });
     };
-    setupNavigation(m_leftNavigation, QIcon(":/images/images/back_48.png"), [=]() { step(-1); });
-    setupNavigation(m_rightNavigation, QIcon(":/images/images/forward_48.png"), [=]() { step(1); });
+    setupNavigation(m_leftNavigation, QIcon(":/images/images/back_48.png"), [=,this]() { step(-1); });
+    setupNavigation(m_rightNavigation, QIcon(":/images/images/forward_48.png"), [=,this]() { step(1); });
     m_statusLabel = new QLabel(this);
     m_statusLabel->setAlignment(Qt::AlignCenter);
     m_statusLabel->setTextInteractionFlags(Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse);
-    m_statusLabel->setStyleSheet("QLabel { color : #efefef; }");
+    m_statusLabel->setStyleSheet("QLabel { color : #efefef; padding-bottom: 4px; }");
 
 
     auto horizontalWrapper = new QWidget(this);
@@ -56,11 +53,12 @@ GalleryView::GalleryView(QWidget *parent)
 
     auto outerLayout = new QVBoxLayout(this);
     this->setLayout(outerLayout);
+    this->setStyleSheet("background-color: black");
     outerLayout->setContentsMargins(0, 4, 0, 4);
-    outerLayout->setSpacing(4);
-    outerLayout->addWidget(horizontalWrapper);
+    outerLayout->setSpacing(0);
     outerLayout->addWidget(m_statusLabel);
-    QTimer::singleShot(0, [=]() { layoutImages(); });
+    outerLayout->addWidget(horizontalWrapper);
+    QTimer::singleShot(0, this, [this] { layoutImages(); });
 }
 
 
@@ -90,7 +88,7 @@ void GalleryView::paintEvent(QPaintEvent *event)
 }
 
 
-void GalleryView::setGallery(const Gallery& gallery)
+void GalleryView::setGallery(shared_ptr<Gallery> gallery)
 {
     this->m_gallery = gallery;
     rehashImage();
@@ -99,14 +97,14 @@ void GalleryView::setGallery(const Gallery& gallery)
 
 QPixmap GalleryView::getImage() const
 {
-    auto spec = m_gallery.currentImage();
+    auto spec = m_gallery->currentImage();
     return spec.m_valid ? m_imageViews.at(1)->getImage() : QPixmap(0, 0);
 }
 
 
 QString GalleryView::getImagePath() const
 {
-    auto spec = m_gallery.currentImage();
+    auto spec = m_gallery->currentImage();
     return spec.m_valid ? spec.m_location : "";
 }
 
@@ -121,8 +119,8 @@ void GalleryView::step(int direction)
     if (direction > 0) {
         m_transitioning = true;
         m_imageViews[0]->setPositionA(QPoint(0, 0), duration);
-        m_imageViews[1]->setPositionA(QPoint(size.width(), 0), duration, [=] {
-            m_gallery.step(direction);
+        m_imageViews[1]->setPositionA(QPoint(size.width(), 0), duration, [=,this] {
+            m_gallery->step(direction);
             rehashImage();
             layoutImages();
             m_transitioning = false;
@@ -130,8 +128,8 @@ void GalleryView::step(int direction)
     } else if (direction < 0) {
         m_transitioning = true;
         m_imageViews[2]->setPositionA(QPoint(0, 0), duration);
-        m_imageViews[1]->setPositionA(QPoint(-size.width(), 0), duration, [=] {
-            m_gallery.step(direction);
+        m_imageViews[1]->setPositionA(QPoint(-size.width(), 0), duration, [=,this] {
+            m_gallery->step(direction);
             rehashImage();
             layoutImages();
             m_transitioning = false;
@@ -141,9 +139,9 @@ void GalleryView::step(int direction)
 
 void GalleryView::rehashImage()
 {
-    auto currentImage = m_gallery.image(0);
-    auto prevImage = m_gallery.image(-1);
-    auto nextImage = m_gallery.image(1);
+    auto currentImage = m_gallery->image(0);
+    auto prevImage = m_gallery->image(-1);
+    auto nextImage = m_gallery->image(1);
     setImageSpec(nextImage, m_imageViews.at(0).get());
     setImageSpec(currentImage, m_imageViews.at(1).get(), true);
     setImageSpec(prevImage, m_imageViews.at(2).get());
@@ -176,7 +174,7 @@ void GalleryView::setTitle(QString s)
         window->setWindowTitle(s);
     } else {
         // we are too fast, app isnt build yet
-        QTimer::singleShot(100, [=]() {
+        QTimer::singleShot(100, [=,this]() {
             auto window = QApplication::activeWindow();
             if (window) {
                 window->setWindowTitle(s);

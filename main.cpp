@@ -4,7 +4,9 @@
 #include <QScreen>
 #include <QDebug>
 #include <QStyleFactory>
+#include <algorithm>
 
+using namespace std;
 
 
 void applyDarkStyle(QApplication& app)
@@ -35,8 +37,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect ssize = screen->geometry();
-    w.resize(ssize.width() * 0.7, ssize.height() * 0.7);
-    w.resize(1700, 1100);
+    w.resize(min(1200.0, ssize.width() * 0.7), min(900.0, ssize.height() * 0.7));
     w.show();
     return a.exec();
 }

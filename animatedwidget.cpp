@@ -34,7 +34,7 @@ void AnimatedWidget::setPositionA(const QPoint position, int durationMs, std::fu
     anim->setEndValue(position);
     anim->start();
     if (onComplete) {
-        connect(anim, &QPropertyAnimation::finished, this, [=] {
+        connect(anim, &QPropertyAnimation::finished, this, [=,this] {
             onComplete();
         });
     }

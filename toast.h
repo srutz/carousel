@@ -42,11 +42,11 @@ public:
             int y = parent->geometry().y() + 16;
             move(x, y);
         }
-        QTimer::singleShot(0, this, [=]() {
+        QTimer::singleShot(0, this, [=,this]() {
             show();
         });
 
-        QTimer::singleShot(timeout, this, [=] () {
+        QTimer::singleShot(timeout, this, [=,this] () {
             this->dismissAndFree();
         });
     }

@@ -8,12 +8,12 @@ Gallery::Gallery() {}
 
 void Gallery::initFromDirectory(QString directory)
 {
+    m_images.clear();
     QStringList imageFilters;
     imageFilters << "*.png" << "*.jpg" << "*.jpeg" << "*.bmp" << "*.gif" << "*.tiff" << "*.svg";
     auto dir = QString(".") == directory ? QDir::home() : QDir(directory);
     QFileInfoList fileInfoList = dir.entryInfoList(imageFilters, QDir::Files);
 
-    m_images.clear();
     for (const QFileInfo &fileInfo : fileInfoList) {
         qDebug() << "loading: " << fileInfo.absoluteFilePath();
         m_images.push_back(make_shared<ImageSpec>(ImageSpec(fileInfo.absoluteFilePath())));
@@ -65,4 +65,9 @@ void Gallery::step(int direction)
     while(m_index < 0) {
         m_index += count;
     }
+}
+
+vector<shared_ptr<ImageSpec>> Gallery::specs() const
+{
+    return m_images;
 }

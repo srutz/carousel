@@ -19,11 +19,11 @@ class GalleryView : public QWidget
 {
     Q_OBJECT
 
+    shared_ptr<Gallery>  m_gallery;
     vector<unique_ptr<ImageView>> m_imageViews;
     QWidget *m_leftNavigation;
     QWidget *m_rightNavigation;
     QWidget *m_imageViewContainer;
-    Gallery m_gallery;
     QLabel *m_statusLabel;
     bool m_transitioning = false;
 
@@ -39,7 +39,7 @@ public:
     QPixmap getImage() const;
     QString getImagePath() const;
     void step(int direction);
-    void setGallery(const Gallery& gallery);
+    void setGallery(shared_ptr<Gallery>);
     void setTitle(QString s);
 
 
