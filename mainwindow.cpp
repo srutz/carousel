@@ -143,6 +143,11 @@ MainWindow::MainWindow(QWidget *parent)
     tabWidget->addTab(albumView, "Album View");
     tabWidget->addTab(galleryView, "Single Image View");
     tabWidget->addTab(tableView, "Table View");
+    connect(tabWidget, &QTabWidget::currentChanged, this, [galleryView](int index) {
+        if (index == 1) {
+            galleryView->layoutImages();
+        }
+    });
 
     auto gallery = make_shared<Gallery>();
     gallery->initFromDirectory(".");

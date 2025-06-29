@@ -28,7 +28,6 @@ class GalleryView : public QWidget
     bool m_transitioning = false;
 
     void setImageSpec(const ImageSpec &spec, ImageView *imageView, bool appylTitle = false);
-    void layoutImages();
     void rehashImage();
 
 public:
@@ -41,6 +40,7 @@ public:
     void step(int direction);
     void setGallery(shared_ptr<Gallery>);
     void setTitle(QString s);
+    void layoutImages();
 
 
 signals:

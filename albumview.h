@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <QWidget>
-#include <QTableView>
+ #include <QScrollArea>
 #include "gallery.h"
 
 using namespace std;
@@ -17,6 +17,7 @@ class AlbumView : public QWidget
 {
     Q_OBJECT
     shared_ptr<Gallery> m_gallery;
+    QScrollArea* scrollArea;
     QWidget* content;
     bool m_sizesComputed = false;
     void layoutImages();

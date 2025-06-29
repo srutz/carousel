@@ -32,6 +32,8 @@ void applyDarkStyle(QApplication& app)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //qDebug() << "available styles:" << QStyleFactory::keys();
+    //QApplication::setStyle(QStyleFactory::create("Windows"));    
     //applyDarkStyle(a);
 
     MainWindow w;

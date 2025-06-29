@@ -74,6 +74,7 @@
             "qtablewidget": "cpp",
             "qlabel": "cpp",
             "qfileinfo": "cpp",
-            "qpushbutton": "cpp"
+            "qpushbutton": "cpp",
+            "qimagereader": "cpp"
         }
 }
