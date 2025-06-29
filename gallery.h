@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDateTime>
+#include <QSize>
 #include <memory>
 
 using namespace std;
@@ -23,6 +24,7 @@ struct ImageSpec
     qint64 m_lastModified = 0; // msec since epoch
     QString m_filename;
     QString m_directory;
+    QSize m_dimensions = QSize(-1, -1);
 
     ImageSpec(const QString location) : m_location(location) {
         //qDebug() << "ImageSpec" << location;

@@ -8,7 +8,7 @@
             "name": "CMake: build",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/Desktop-Debug/${workspaceFolderBasename}",
+            "program": "${workspaceFolder}/build/carousel",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

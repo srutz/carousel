@@ -30,6 +30,8 @@ set(PROJECT_SOURCES
         toast.h
         albumview.h
         albumview.cpp
+        tableview.h
+        tableview.cpp
         imagespectablemodel.h
 )
 

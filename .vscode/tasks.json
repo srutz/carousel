@@ -6,7 +6,7 @@
             "command": "cmake",
             "args": [
                 "--build",
-                "${workspaceFolder}/build/Desktop-Debug"
+                "${workspaceFolder}/build"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

@@ -4,6 +4,7 @@
 #include "toast.h"
 #include "galleryview.h"
 #include "albumview.h"
+#include "tableview.h"
 
 #include <memory>
 #include <QShortcut>
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     setStatusBar(nullptr);
     auto galleryView = new GalleryView(this);
     auto albumView = new AlbumView(this);
+    auto tableView = new TableView(this);
 
     connect(ui->actionExit, &QAction::triggered, this, [=, this]()
             { QApplication::exit(); });
@@ -138,8 +140,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     layout->addWidget(tabWidget);
 
-    tabWidget->addTab(galleryView, "Single Image View");
     tabWidget->addTab(albumView, "Album View");
+    tabWidget->addTab(galleryView, "Single Image View");
+    tabWidget->addTab(tableView, "Table View");
 
     auto gallery = make_shared<Gallery>();
     gallery->initFromDirectory(".");
@@ -147,6 +150,7 @@ MainWindow::MainWindow(QWidget *parent)
     // gallery.initFromDirectory("/home/sr/tmp3");
     galleryView->setGallery(gallery);
     albumView->setGallery(gallery);
+    tableView->setGallery(gallery);
 }
 
 MainWindow::~MainWindow()

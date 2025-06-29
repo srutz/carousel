@@ -1,5 +1,5 @@
-#ifndef ALBUMVIEW_H
-#define ALBUMVIEW_H
+#ifndef TABLEVIEW_H
+#define TABLEVIEW_H
 
 #include <memory>
 #include <QWidget>
@@ -13,18 +13,15 @@ using namespace std;
  * is shown and others are accessible via buttons and can be
  * navigated to
  */
-class AlbumView : public QWidget
+class TableView : public QWidget
 {
     Q_OBJECT
     shared_ptr<Gallery> m_gallery;
-    QWidget* content;
-    bool m_sizesComputed = false;
+    QTableView *table;
     void layoutImages();
 
-    static QSize computeImageSize(const ImageSpec &spec);
-
 public:
-    explicit AlbumView(QWidget *parent = nullptr);
+    explicit TableView(QWidget *parent = nullptr);
     void setGallery(shared_ptr<Gallery>);
 
     void resizeEvent(QResizeEvent *event) override;
@@ -33,4 +30,4 @@ public:
 signals:
 };
 
-#endif // ALBUMVIEW_H
+#endif // TABLEVIEW_H

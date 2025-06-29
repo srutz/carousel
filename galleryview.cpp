@@ -118,8 +118,8 @@ void GalleryView::step(int direction)
     auto duration = 250;
     if (direction > 0) {
         m_transitioning = true;
-        m_imageViews[0]->setPositionA(QPoint(0, 0), duration);
-        m_imageViews[1]->setPositionA(QPoint(size.width(), 0), duration, [=,this] {
+        m_imageViews[2]->setPositionA(QPoint(0, 0), duration);
+        m_imageViews[1]->setPositionA(QPoint(-size.width(), 0), duration, [=,this] {
             m_gallery->step(direction);
             rehashImage();
             layoutImages();
@@ -127,8 +127,8 @@ void GalleryView::step(int direction)
         });
     } else if (direction < 0) {
         m_transitioning = true;
-        m_imageViews[2]->setPositionA(QPoint(0, 0), duration);
-        m_imageViews[1]->setPositionA(QPoint(-size.width(), 0), duration, [=,this] {
+        m_imageViews[0]->setPositionA(QPoint(0, 0), duration);
+        m_imageViews[1]->setPositionA(QPoint(size.width(), 0), duration, [=,this] {
             m_gallery->step(direction);
             rehashImage();
             layoutImages();
@@ -142,9 +142,9 @@ void GalleryView::rehashImage()
     auto currentImage = m_gallery->image(0);
     auto prevImage = m_gallery->image(-1);
     auto nextImage = m_gallery->image(1);
-    setImageSpec(nextImage, m_imageViews.at(0).get());
+    setImageSpec(prevImage, m_imageViews.at(0).get());
     setImageSpec(currentImage, m_imageViews.at(1).get(), true);
-    setImageSpec(prevImage, m_imageViews.at(2).get());
+    setImageSpec(nextImage, m_imageViews.at(2).get());
 }
 
 
